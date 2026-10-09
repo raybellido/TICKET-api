@@ -16,7 +16,7 @@ public class CreateUserServiceTest {
 
         FakeUserRepository repository = new FakeUserRepository();
 
-        CreateUserService service = new CreateUserService(repository);
+        CreateUserService service = new CreateUserService(repository, new FakePasswordEncoder());
 
         CreateUserCommand command =
                 new CreateUserCommand("Juan", new Email("juan@gmail.com"), "123456");
@@ -25,6 +25,7 @@ public class CreateUserServiceTest {
 
         assertEquals("Juan", user.getName());
         assertEquals(UserRole.CUSTOMER, user.getRole());
+        assertEquals("hashed:123456", user.getPassword());
         assertEquals(user, repository.getSavedUser());
     }
 }

@@ -1,5 +1,6 @@
 package com.helpdesk.app.presentation.controller.user;
 
+import com.helpdesk.app.domain.model.user.User;
 import com.helpdesk.app.domain.model.user.UserRole;
 
 public class UserResponse {
@@ -13,6 +14,10 @@ public class UserResponse {
         this.name = name;
         this.email = email;
         this.role = role;
+    }
+
+    public static UserResponse from(User user) {
+        return new UserResponse(user.getId(), user.getName(), user.getEmail().getValue(), user.getRole());
     }
 
     public Long getId() {

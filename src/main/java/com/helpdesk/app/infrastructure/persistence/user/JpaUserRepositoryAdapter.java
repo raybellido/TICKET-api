@@ -4,6 +4,8 @@ import com.helpdesk.app.application.port.out.UserRepository;
 import com.helpdesk.app.domain.model.user.User;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class JpaUserRepositoryAdapter implements UserRepository {
 
@@ -20,5 +22,15 @@ public class JpaUserRepositoryAdapter implements UserRepository {
         UserJpaEntity savedEntity = repository.save(entity);
 
         return UserPersistenceMapper.toDomain(savedEntity);
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return repository.findById(id).map(UserPersistenceMapper::toDomain);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return repository.findByEmail(email).map(UserPersistenceMapper::toDomain);
     }
 }
